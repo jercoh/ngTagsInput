@@ -30,7 +30,7 @@
  */
 tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tagsInputConfig, tiUtil) {
     function SuggestionList(loadFn, options, events) {
-        var self = {}, getDifference, lastPromise, getTagId;
+        var list = {}, getDifference, lastPromise, getTagId;
 
         getTagId = function() {
             return options.tagsInput.keyProperty || options.tagsInput.displayProperty;
@@ -48,26 +48,26 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
             });
         };
 
-        self.reset = function() {
+        list.reset = function() {
             lastPromise = null;
 
-            self.items = [];
-            self.visible = false;
-            self.index = -1;
-            self.selected = null;
-            self.query = null;
+            list.items = [];
+            list.visible = false;
+            list.index = -1;
+            list.selected = null;
+            list.query = null;
         };
-        self.show = function() {
+        list.show = function() {
             if (options.selectFirstMatch) {
-                self.select(0);
+                list.select(0);
             }
             else {
-                self.selected = null;
+                list.selected = null;
             }
-            self.visible = true;
+            list.visible = true;
         };
-        self.load = tiUtil.debounce(function(query, tags) {
-            self.query = query;
+        list.load = tiUtil.debounce(function(query, tags) {
+            list.query = query;
 
             var promise = $q.when(loadFn({ $query: query }));
             lastPromise = promise;
@@ -79,38 +79,38 @@ tagsInput.directive('autoComplete', function($document, $timeout, $sce, $q, tags
 
                 items = tiUtil.makeObjectArray(items.data || items, getTagId());
                 items = getDifference(items, tags);
-                self.items = items.slice(0, options.maxResultsToShow);
+                list.items = items.slice(0, options.maxResultsToShow);
 
-                if (self.items.length > 0) {
-                    self.show();
+                if (list.items.length > 0) {
+                    list.show();
                 }
                 else {
-                    self.reset();
+                    list.reset();
                 }
             });
         }, options.debounceDelay);
 
-        self.selectNext = function() {
-            self.select(++self.index);
+        list.selectNext = function() {
+            list.select(++list.index);
         };
-        self.selectPrior = function() {
-            self.select(--self.index);
+        list.selectPrior = function() {
+            list.select(--list.index);
         };
-        self.select = function(index) {
+        list.select = function(index) {
             if (index < 0) {
-                index = self.items.length - 1;
+                index = list.items.length - 1;
             }
-            else if (index >= self.items.length) {
+            else if (index >= list.items.length) {
                 index = 0;
             }
-            self.index = index;
-            self.selected = self.items[index];
+            list.index = index;
+            list.selected = list.items[index];
             events.trigger('suggestion-selected', index);
         };
 
-        self.reset();
+        list.reset();
 
-        return self;
+        return list;
     }
 
     function scrollToElement(root, index) {

@@ -9,48 +9,51 @@
  * Automatically sets the input's width so its content is always visible. Used internally by tagsInput directive.
  */
 tagsInput.directive('tiAutosize', function(tagsInputConfig) {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attrs, ctrl) {
-            var threshold = tagsInputConfig.getTextAutosizeThreshold(),
-                span, resize;
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function(scope, element, attrs, ctrl) {
+      var threshold = tagsInputConfig.getTextAutosizeThreshold(),
+        span, resize;
 
-            span = angular.element('<span class="input"></span>');
-            span.css('display', 'none')
-                .css('visibility', 'hidden')
-                .css('width', 'auto')
-                .css('white-space', 'pre');
+      span = angular.element('<span class="input  txt-900  txt-base"></span>');
+      span.css('display', 'none')
+        .css('visibility', 'hidden')
+        .css('width', 'auto')
+        .css('white-space', 'pre');
 
-            element.parent().append(span);
+      // SolveBio
+      var maxWidth = angular.element('.tag-list').width();
 
-            resize = function(originalValue) {
-                var value = originalValue, width;
+      element.parent().append(span);
 
-                if (angular.isString(value) && value.length === 0) {
-                    value = attrs.placeholder;
-                }
+      resize = function(originalValue) {
+        var value = originalValue, width;
 
-                if (value) {
-                    span.text(value);
-                    span.css('display', '');
-                    width = span.prop('offsetWidth');
-                    span.css('display', 'none');
-                }
-
-                element.css('width', width ? width + threshold + 'px' : '');
-
-                return originalValue;
-            };
-
-            ctrl.$parsers.unshift(resize);
-            ctrl.$formatters.unshift(resize);
-
-            attrs.$observe('placeholder', function(value) {
-                if (!ctrl.$modelValue) {
-                    resize(value);
-                }
-            });
+        if (angular.isString(value) && value.length === 0) {
+          value = attrs.placeholder;
         }
-    };
+
+        if (value) {
+          span.text(value);
+          span.css('display', '');
+          width = span.prop('offsetWidth');
+          span.css('display', 'none');
+        }
+
+        element.css('width', width <= maxWidth ? width + 'px' : maxWidth);
+
+        return originalValue;
+      };
+
+      ctrl.$parsers.unshift(resize);
+      ctrl.$formatters.unshift(resize);
+
+      attrs.$observe('placeholder', function(value) {
+        if (!ctrl.$modelValue) {
+          resize(value);
+        }
+      });
+    }
+  };
 });

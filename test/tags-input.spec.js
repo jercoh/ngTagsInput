@@ -59,7 +59,7 @@ describe('tags-input directive', function() {
     }
 
     function getInput() {
-        return element.find('input');
+        return element.find('textarea');
     }
 
     function newTag(tag, key) {
