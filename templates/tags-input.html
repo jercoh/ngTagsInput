@@ -6,20 +6,23 @@
           ng-class="{ selected: tag == tagList.selected }">
         <ti-tag-item data="tag"></ti-tag-item>
       </li>
+      <li class="tag-item">
+          <textarea msd-elastic class="textarea"
+                    placeholder="Write Values..."
+                    autocomplete="off"
+                    ng-model="newTag.text"
+                    ng-change="eventHandlers.input.change(newTag.text)"
+                    ng-keydown="eventHandlers.input.keydown($event)"
+                    ng-focus="eventHandlers.input.focus($event)"
+                    ng-blur="eventHandlers.input.blur($event)"
+                    ng-paste="eventHandlers.input.paste($event)"
+                    ng-trim="false"
+                    ng-class="{'invalid-tag': newTag.invalid}"
+                    ng-disabled="disabled"
+                    ti-bind-attrs="{type: options.type, placeholder: options.placeholder, tabindex: options.tabindex, spellcheck: options.spellcheck}"
+                    ti-autosize>
+            </textarea>
+      </li>
     </ul>
-    <textarea msd-elastic class="textarea"
-           autocomplete="off"
-           ng-model="newTag.text"
-           ng-change="eventHandlers.input.change(newTag.text)"
-           ng-keydown="eventHandlers.input.keydown($event)"
-           ng-focus="eventHandlers.input.focus($event)"
-           ng-blur="eventHandlers.input.blur($event)"
-           ng-paste="eventHandlers.input.paste($event)"
-           ng-trim="false"
-           ng-class="{'invalid-tag': newTag.invalid}"
-           ng-disabled="disabled"
-           ti-bind-attrs="{type: options.type, placeholder: options.placeholder, tabindex: options.tabindex, spellcheck: options.spellcheck}"
-           ti-autosize>
-    </textarea>
   </div>
 </div>
