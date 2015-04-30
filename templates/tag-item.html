@@ -1,4 +1,5 @@
-<span ng-bind="$getDisplayText(); $event.stopPropagation()"></span>
+<span ng-bind="$getDisplayText()"
+      ng-click="$removeTag(); $event.stopPropagation()"></span>
 <a class="remove-button  g-flex-item  g-flex-align-items--center  pg-dataset__remove-filter"
    ng-click="$removeTag(); $event.stopPropagation()">
     <i class="i-x"></i>

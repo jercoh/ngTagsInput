@@ -1,11 +1,11 @@
 /*!
- * ngTagsInput v3.0.0
+ * ngTagsInput SolveBio version v3.0.0
  * http://mbenford.github.io/ngTagsInput
  *
  * Copyright (c) 2013-2015 Michael Benford
  * License: MIT
  *
- * Generated at 2015-04-30 11:22:52 -0400
+ * Generated at 2015-04-30 11:46:35 -0400
  */
 (function() {
 'use strict';
@@ -1143,7 +1143,7 @@ tagsInput.run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put('ngTagsInput/tag-item.html',
-    "<span ng-bind=\"$getDisplayText(); $event.stopPropagation()\"></span> <a class=\"remove-button g-flex-item g-flex-align-items--center pg-dataset__remove-filter\" ng-click=\"$removeTag(); $event.stopPropagation()\"><i class=\"i-x\"></i></a>"
+    "<span ng-bind=\"$getDisplayText()\" ng-click=\"$removeTag(); $event.stopPropagation()\"></span> <a class=\"remove-button g-flex-item g-flex-align-items--center pg-dataset__remove-filter\" ng-click=\"$removeTag(); $event.stopPropagation()\"><i class=\"i-x\"></i></a>"
   );
 
   $templateCache.put('ngTagsInput/auto-complete.html',
