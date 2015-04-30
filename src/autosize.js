@@ -22,12 +22,11 @@ tagsInput.directive('tiAutosize', function(tagsInputConfig) {
         .css('width', 'auto')
         .css('white-space', 'pre');
 
-      // SolveBio
-      var maxWidth = angular.element('.tag-list').width();
-
       element.parent().append(span);
 
       resize = function(originalValue) {
+        // SolveBio
+        var maxWidth = angular.element('.tag-list').width();
         var value = originalValue, width;
 
         if (angular.isString(value) && value.length === 0) {
